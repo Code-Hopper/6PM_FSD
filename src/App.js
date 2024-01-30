@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// importing bootstrap
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap/dist/js/bootstrap.bundle.min.js"
+
+// importing components
+import { AddEmoji } from "./components/AddEmoji";
+import { EmojiContainer } from './components/EmojiContainer';
+import { useState } from "react";
 
 function App() {
+
+  let [data , setData] = useState([])
+
+  let onNewEmojiAddition = (emojiData) =>{
+    console.log("this is from app.js: ")
+    console.log(emojiData)
+    setData(emojiData)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <h1 className="text-center">Emoji<span className="fw-bolder text-primary">Pedia 😊</span></h1>
+
+      {/* add emojies */}
+      {/* this will add new emojies */}
+      <AddEmoji onAdd={onNewEmojiAddition}/> 
+
+      {/* display emojies */}
+      {/* this will display all the emojies that exists or added by addemoji*/}
+      <EmojiContainer emojiArray={data} />
+    </>
   );
 }
 

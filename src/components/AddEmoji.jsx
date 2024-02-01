@@ -3,42 +3,57 @@ import { emojis } from "./DataSheet"
 
 let AddEmoji = (props) => {
 
-    let [newEmojies , setNewEmojies] = useState([])
+    let [newEmojies, setNewEmojies] = useState([])
 
     let [emojiData, setEmojiData] = useState(
         {
-            emoji:"",
-            emojiName:"",
-            aboutEmoji:""
+            emoji: "",
+            emojiName: "",
+            aboutEmoji: ""
         }
     )
 
-    let EmojiDataChange = (event) =>{
+    let EmojiDataChange = (event) => {
 
         // console.log(event.target.name)
         // console.log(event.target.value)
 
         let name = event.target.name
         let value = event.target.value
-      
+
         // ... 
 
-        setEmojiData({ ...emojiData , [name]: value });
+        setEmojiData({ ...emojiData, [name]: value , emoji_id :
+        
+            newEmojies.length ? 
+
+            newEmojies[newEmojies.length - 1].emoji_id + 1 : 1 });
 
     }
 
-    let EmojiSubmit = (event) =>{
-        event.preventDefault()        
+    let EmojiSubmit = (event) => {
+        event.preventDefault()
         console.log(emojiData)
 
-        setNewEmojies( (prevnewEmojies)=>{
-          return [ ...prevnewEmojies , emojiData ]
-        } )
+        setNewEmojies((prevnewEmojies) => {
+            
+            let UpdatedEmojiArray =  [...prevnewEmojies, emojiData]
 
-        console.log(newEmojies)
+            props.onAdd(UpdatedEmojiArray)
 
-        props.onAdd(newEmojies)
+            return UpdatedEmojiArray
+        })
+    }
 
+    let DeleteEmojiFromEmojiArray = (who) =>{
+        newEmojies.filter((emoji)=>{
+
+            let remaing_element = [];
+            
+            remaing_element.push(emoji.emoji_id != who )
+
+            props.onAdd(remaing_element) 
+        })
     }
 
     return (
